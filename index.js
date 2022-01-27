@@ -192,6 +192,22 @@ async function run() {
             console.log('updating', id)
             res.json(result)
         })
+        // rating update
+        app.put('/rating', async (req, res) => {
+            const id = req.body.id;
+            const rating = req.body.blogRating;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    rating: rating
+                },
+            };
+            const result = await blogsCollection.updateOne(filter, updateDoc, options)
+
+            res.json(result)
+            console.log(rating, id)
+        })
         // GET API for show data
         app.get("/blogs", async (req, res) => {
             const cursor = blogsCollection.find({});
