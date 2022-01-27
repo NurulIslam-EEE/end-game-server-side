@@ -22,7 +22,7 @@ async function run() {
         const blogsCollection = client.db("end-game").collection("blogs");
         const usersCollection = client.db("end-game").collection("users");
 
-
+        const reviewsCollection = client.db("end-game").collection("reviews");
 
         // app.post('/rider', async (req, res) => {
         //     // console.log(req.body)
