@@ -175,23 +175,7 @@ async function run() {
             const result = await blogsCollection.deleteOne(query);
             res.send(result);
         })
-        // update
-        app.put('/blogs/:id', async (req, res) => {
-            const id = req.params.id;
-            const updatedProduct = req.body;
-            const filter = { _id: ObjectId(id) };
-            const options = { upsert: true };
-            const updateDoc = {
-                $set: {
-                    name: updatedProduct.name,
-                    price: updatedProduct.price,
-                    quantity: updatedProduct.quantity
-                },
-            };
-            const result = await userCollection.updateOne(filter, updateDoc, options)
-            console.log('updating', id)
-            res.json(result)
-        })
+
         // rating update
         app.put('/rating', async (req, res) => {
             const id = req.body.id;
@@ -221,6 +205,44 @@ async function run() {
             const result = await blogsCollection.findOne(query);
             res.send(result);
         });
+        // update
+        app.put('/blogs/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedBlogs = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    title: updatedBlogs.title,
+                    description: updatedBlogs.description,
+                    image: updatedBlogs.image,
+                    location: updatedBlogs.location,
+                    category: updatedBlogs.category,
+                    cost: updatedBlogs.cost,
+                    info: updatedBlogs.info
+                },
+            };
+            const result = await blogsCollection.updateOne(filter, updateDoc, options)
+            console.log('updating', id)
+            res.json(result)
+        })
+        // update
+        app.put('/blogs/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedProduct = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    name: updatedProduct.name,
+                    price: updatedProduct.price,
+                    quantity: updatedProduct.quantity
+                },
+            };
+            const result = await userCollection.updateOne(filter, updateDoc, options)
+            console.log('updating', id)
+            res.json(result)
+        })
         //post api for add review insert
         app.post("/review", async (req, res) => {
             const review = req.body;
@@ -235,6 +257,20 @@ async function run() {
             const review = await cursor.toArray();
             res.send(review);
         });
+        //update review status 
+        app.put('/review/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedOrders = req.body;
+            const query = { _id: ObjectId(id) };
+            const options = { upsert: true }
+            const updatedDoc = {
+                $set: {
+                    status: updatedOrders.status
+                },
+            };
+            const result = await reviewsCollection.updateOne(query, updatedDoc, options)
+            res.json(result)
+        })
 
         // add blog
         // app.post('/addBlog', async (req, res) => {
