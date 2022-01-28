@@ -243,6 +243,20 @@ async function run() {
             console.log('updating', id)
             res.json(result)
         })
+        //update review status 
+        app.put('/blogStatus/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedStatus = req.body;
+            const query = { _id: ObjectId(id) };
+            const options = { upsert: true }
+            const updatedDoc = {
+                $set: {
+                    status: updatedStatus.status
+                },
+            };
+            const result = await blogsCollection.updateOne(query, updatedDoc, options)
+            res.json(result)
+        })
         //post api for add review insert
         app.post("/review", async (req, res) => {
             const review = req.body;
